@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular Cerere Servicii - ConsultExpert</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .service-options {
+            display: grid;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .service-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .service-option:hover {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+        
+        .service-option input[type="radio"] {
+            width: auto;
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        
+        .service-option.selected {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+        
+        .gdpr-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .gdpr-checkbox input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            transform: scale(1.3);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        
+        .gdpr-label {
+            font-size: 0.95em !important;
+            line-height: 1.5;
+            color: #2c3e50 !important;
+            margin: 0 !important;
+            cursor: pointer;
+        }
+        
+        .gdpr-checkbox:hover {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #27ae60;
+            display: none;
+        }
+        
+        .result h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .result-content {
+            white-space: pre-line;
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            line-height: 1.6;
+        }
+        
+        .copy-btn {
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        
+        .copy-btn:hover {
+            background: #229954;
+        }
+        
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #1ebe57;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ ConsultExpert</h1>
+            <p>Consultanță personalizată și programări la consulatele României</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="consultForm">
+                <div class="form-group">
+                    <label for="fullName">👤 Nume complet <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Introduceți numele complet">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">📧 Adresă de email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="exemplu@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">📞 Număr de telefon (cu prefix internațional) <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+39 xxx xxx xxxx">
+                </div>
+                
+                <div class="form-group">
+                    <label>✅ Tipul serviciului dorit <span class="required">*</span></label>
+                    <div class="service-options">
+                        <div class="service-option">
+                            <input type="radio" id="service1" name="serviceType" value="Doar programare la consulat" required>
+                            <label for="service1">🗓️ Doar programare la consulat</label>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" id="service2" name="serviceType" value="Doar consultanță personalizată" required>
+                            <label for="service2">💬 Doar consultanță personalizată</label>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" id="service3" name="serviceType" value="Pachet complet (consultanță + programare + verificarea documentelor)" required>
+                            <label for="service3">📦 Pachet complet (consultanță + programare + verificarea documentelor)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="documentType">📌 Tipul actului consular <span class="required">*</span></label>
+                    <select id="documentType" name="documentType" required>
+                        <option value="">Selectați tipul actului...</option>
+                        
+                        <!-- Documente de călătorie și identitate -->
+                        <optgroup label="🛂 Documente de călătorie și identitate">
+                            <option value="Pașaport simplu electronic pentru cetățeni români majori cu domiciliul în România">Pașaport simplu electronic (domiciliu România)</option>
+                            <option value="Pașaport simplu electronic pentru cetățeni români majori cu domiciliul în străinătate">Pașaport simplu electronic (domiciliu străinătate)</option>
+                            <option value="Titlu de călătorie">Titlu de călătorie</option>
+                            <option value="Prima carte de identitate">Prima carte de identitate</option>
+                        </optgroup>
+                        
+                        <!-- Acte de stare civilă -->
+                        <optgroup label="📋 Acte de stare civilă">
+                            <option value="Duplicat certificat de naștere">Duplicat certificat de naștere</option>
+                            <option value="Duplicat certificat de căsătorie">Duplicat certificat de căsătorie</option>
+                            <option value="Duplicat certificat de deces">Duplicat certificat de deces</option>
+                            <option value="Extras multilingv certificat de naștere">Extras multilingv certificat de naștere</option>
+                            <option value="Extras multilingv certificat de căsătorie">Extras multilingv certificat de căsătorie</option>
+                            <option value="Extras multilingv certificat de deces">Extras multilingv certificat de deces</option>
+                            <option value="Adeverință de stare civilă">Adeverință de stare civilă</option>
+                        </optgroup>
+                        
+                        <!-- Transcrieri și înregistrări -->
+                        <optgroup label="📝 Transcrieri și înregistrări">
+                            <option value="Transcriere certificat de naștere străin">Transcriere certificat de naștere străin</option>
+                            <option value="Transcriere certificat de căsătorie străin">Transcriere certificat de căsătorie străin</option>
+                            <option value="Transcriere certificat de deces străin">Transcriere certificat de deces străin</option>
+                            <option value="Înregistrarea căsătoriei la consulat">Înregistrarea căsătoriei la consulat</option>
+                            <option value="Înscriere mențiuni modificări statut civil">Înscriere mențiuni modificări statut civil</option>
+                        </optgroup>
+                        
+                        <!-- Cetățenie -->
+                        <optgroup label="🇷🇴 Cetățenie română">
+                            <option value="Redobândirea cetățeniei române (Art. 10)">Redobândirea cetățeniei române (Art. 10)</option>
+                            <option value="Redobândirea cetățeniei române (Art. 11)">Redobândirea cetățeniei române (Art. 11)</option>
+                            <option value="Acordarea cetățeniei române (Art. 8 indice 1)">Acordarea cetățeniei române (Art. 8 indice 1)</option>
+                            <option value="Depunerea jurământului de credință">Depunerea jurământului de credință</option>
+                            <option value="Duplicat certificat de cetățenie română">Duplicat certificat de cetățenie română</option>
+                            <option value="Dobândirea cetățeniei române pentru minori">Dobândirea cetățeniei române pentru minori</option>
+                            <option value="Eliberarea certificatului de cetățenie română minorilor">Eliberarea certificatului de cetățenie română minorilor</option>
+                            <option value="Renunțare la cetățenia română">Renunțare la cetățenia română</option>
+                            <option value="Verificarea statutului juridic în raportul cu statul român">Verificarea statutului juridic</option>
+                            <option value="Eliberarea dovezii de cetățenie">Eliberarea dovezii de cetățenie</option>
+                        </optgroup>
+                        
+                        <!-- Acte notariale -->
+                        <optgroup label="⚖️ Acte notariale">
+                            <option value="Procură specială (carte de identitate)">Procură specială (carte de identitate)</option>
+                            <option value="Procură specială (succesiune)">Procură specială (succesiune)</option>
+                            <option value="Procură specială (administrare imobil)">Procură specială (administrare imobil)</option>
+                            <option value="Procură specială (cumpărare/vânzare imobil)">Procură specială (cumpărare/vânzare imobil)</option>
+                            <option value="Procură specială (înmatriculare auto)">Procură specială (înmatriculare auto)</option>
+                            <option value="Procură specială (alte situații)">Procură specială (alte situații)</option>
+                            <option value="Declarație renunțare succesiune">Declarație renunțare succesiune</option>
+                            <option value="Declarație călătorie minori">Declarație călătorie minori</option>
+                            <option value="Declarație pe propria răspundere">Declarație pe propria răspundere</option>
+                            <option value="Declarație acord eliberare pașaport minor">Declarație acord eliberare pașaport minor</option>
+                        </optgroup>
+                        
+                        <!-- Alte servicii -->
+                        <optgroup label="📄 Alte servicii">
+                            <option value="Cazier judiciar">Cazier judiciar</option>
+                            <option value="Atribuire CNP">Atribuire CNP</option>
+                            <option value="Atestat de domiciliu">Atestat de domiciliu</option>
+                            <option value="Apostilare/Supralegalizare">Apostilare/Supralegalizare</option>
+                            <option value="Documente solicitate de autorități locale">Documente solicitate de autorități locale</option>
+                            <option value="Formular standard multilingv UE">Formular standard multilingv UE</option>
+                            <option value="Traduceri autorizate română-italiană">Traduceri autorizate română-italiană</option>
+                            <option value="Modificarea opțiunii de domiciliu">Modificarea opțiunii de domiciliu</option>
+                        </optgroup>
+                        
+                        <option value="Altul">Altul (specificați în observații)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferredDate">📅 Interval de preferință pentru programare</label>
+                    <input type="text" id="preferredDate" name="preferredDate" placeholder="Ex: săptămâna 1-7 august, sau orice zi disponibilă">
+                </div>
+                
+                <div class="form-group">
+                    <label for="observations">🗒️ Observații suplimentare</label>
+                    <textarea id="observations" name="observations" placeholder="Menționați orice informații suplimentare: urgență, nevoi speciale, întrebări despre documente, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <div class="gdpr-checkbox">
+                        <input type="checkbox" id="gdprConsent" name="gdprConsent" required>
+                        <label for="gdprConsent" class="gdpr-label">
+                            🔒 <strong>Sunt de acord</strong> cu prelucrarea datelor personale în conformitate cu GDPR. Datele furnizate vor fi utilizate exclusiv pentru procesarea cererii de servicii consulare și nu vor fi partajate cu terțe părți fără acordul meu explicit.
+                        </label>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="whatsappNumber" name="whatsappNumber" value="39388305076">
+                
+                <button type="submit" class="btn">📤 Trimite formular pe WhatsApp</button>
+            </form>
+            
+            <div id="result" class="result">
+                <h3>📋 Cerere servicii - ConsultExpert</h3>
+                <div id="resultContent" class="result-content"></div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copiază formularul</button>
+                <button class="whatsapp-btn" onclick="sendToWhatsApp()">📱 Deschide din nou WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactivity to service options
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove selected class from all options
+                document.querySelectorAll('.service-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('consultForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Generate the formatted result
+            const result = `Cerere servicii – ConsultExpert
+
+👤 Nume: ${data.fullName}
+📧 Email: ${data.email}
+📞 Telefon: ${data.phone}
+
+✅ Serviciu dorit: ${data.serviceType}
+📌 Act consular: ${data.documentType}
+📅 Preferință programare: ${data.preferredDate || 'Nu a fost specificată'}
+🗒️ Observații: ${data.observations || 'Nu au fost menționate observații suplimentare'}
+
+---
+Data solicitării: ${new Date().toLocaleDateString('ro-RO')}`;
+
+            document.getElementById('resultContent').textContent = result;
+            document.getElementById('result').style.display = 'block';
+            
+            // Automatically send to WhatsApp after a short delay
+            setTimeout(() => {
+                sendToWhatsApp();
+            }, 1000);
+            
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        function copyToClipboard() {
+            const content = document.getElementById('resultContent').textContent;
+            navigator.clipboard.writeText(content).then(function() {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copiat!';
+                btn.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#27ae60';
+                }, 2000);
+            });
+        }
+
+        function sendToWhatsApp() {
+            const content = document.getElementById('resultContent').textContent;
+            
+            if (!content || content.trim() === '') {
+                alert('Vă rugăm să completați mai întâi formularul!');
+                return;
+            }
+            
+            // ConsultExpert WhatsApp number (corect formatat)
+            const whatsappNumber = '393883050076';
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(content);
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            console.log('WhatsApp URL:', whatsappUrl); // Pentru debugging
+            
+            // Open WhatsApp in new tab/window
+            const whatsappWindow = window.open(whatsappUrl, '_blank');
+            
+            // Check if popup was blocked
+            if (!whatsappWindow) {
+                alert('Pop-up blocat! Vă rugăm să permiteți pop-up-urile pentru acest site și încercați din nou.');
+                return;
+            }
+            
+            // Update button temporarily
+            const btn = document.querySelector('.whatsapp-btn');
+            if (btn) {
+                const originalText = btn.textContent;
+                btn.textContent = '✅ WhatsApp deschis!';
+                btn.style.background = '#1ebe57';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#25d366';
+                }, 3000);
+            }
+        }
+
+        // Auto-format phone number
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0 && !value.startsWith('39')) {
+                if (value.startsWith('0')) {
+                    value = '39' + value.substring(1);
+                } else if (!value.startsWith('39')) {
+                    value = '39' + value;
+                }
+            }
+            
+            // Format as +39 xxx xxx xxxx
+            if (value.length >= 2) {
+                value = '+39 ' + value.substring(2);
+            }
+            
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
