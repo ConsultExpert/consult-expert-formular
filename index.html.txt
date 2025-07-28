@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConsultExpert - Cerere Servicii</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    form {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      margin-top: 1rem;
+      display: block;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>ConsultExpert - Cerere Servicii</h2>
+
+  <form action="https://formspree.io/f/mnnzdnlr" method="POST">
+    <label for="nume">Nume Prenume</label>
+    <input type="text" id="nume" name="Nume" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="Email" required />
+
+    <label for="telefon">Telefon</label>
+    <input type="tel" id="telefon" name="Telefon" required />
+
+    <label for="serviciu">Serviciu solicitat</label>
+    <select id="serviciu" name="Serviciu" required>
+      <option value="">Alege un serviciu</option>
+      <option value="Programare consulat">Programare consulat</option>
+      <option value="Consultanță personalizată">Consultanță personalizată</option>
+      <option value="Pachet complet">Pachet complet</option>
+    </select>
+
+    <label for="detalii">Detalii suplimentare</label>
+    <textarea id="detalii" name="Detalii" rows="5" placeholder="Scrie aici detaliile cererii tale..."></textarea>
+
+    <button type="submit">Trimite cererea</button>
+  </form>
+
+</body>
+</html>
